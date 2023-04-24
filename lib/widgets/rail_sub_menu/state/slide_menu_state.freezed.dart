@@ -16,16 +16,20 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SlideMenuState {
-  /// Current menu data
+  /// 현재 메뉴데이터
   List<SlideMenuData> get menuData => throw _privateConstructorUsedError;
 
-  /// If there is a submenu
+  /// 서브메뉴가 있는 경우
+  /// 네비게이션 네일 메뉴 클릭 > 서브메뉴가 있는 경우 true
   bool get onSubMenu => throw _privateConstructorUsedError;
 
-  /// Rail tap > submenu Index
+  /// 서브메뉴 open 또는 close, true: 안 보임
+  bool get visible => throw _privateConstructorUsedError;
+
+  /// 네비게이션 네일 메뉴 클릭 > 네일 인덱스
   int? get onSubMenuIndex => throw _privateConstructorUsedError;
 
-  /// ID when an item in the submenu is selected
+  /// 서브메뉴의 아이템을 선택했을 때 id
   String? get selectedSubItemId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -42,6 +46,7 @@ abstract class $SlideMenuStateCopyWith<$Res> {
   $Res call(
       {List<SlideMenuData> menuData,
       bool onSubMenu,
+      bool visible,
       int? onSubMenuIndex,
       String? selectedSubItemId});
 }
@@ -61,6 +66,7 @@ class _$SlideMenuStateCopyWithImpl<$Res, $Val extends SlideMenuState>
   $Res call({
     Object? menuData = null,
     Object? onSubMenu = null,
+    Object? visible = null,
     Object? onSubMenuIndex = freezed,
     Object? selectedSubItemId = freezed,
   }) {
@@ -72,6 +78,10 @@ class _$SlideMenuStateCopyWithImpl<$Res, $Val extends SlideMenuState>
       onSubMenu: null == onSubMenu
           ? _value.onSubMenu
           : onSubMenu // ignore: cast_nullable_to_non_nullable
+              as bool,
+      visible: null == visible
+          ? _value.visible
+          : visible // ignore: cast_nullable_to_non_nullable
               as bool,
       onSubMenuIndex: freezed == onSubMenuIndex
           ? _value.onSubMenuIndex
@@ -96,6 +106,7 @@ abstract class _$$_SlideMenuStateCopyWith<$Res>
   $Res call(
       {List<SlideMenuData> menuData,
       bool onSubMenu,
+      bool visible,
       int? onSubMenuIndex,
       String? selectedSubItemId});
 }
@@ -113,6 +124,7 @@ class __$$_SlideMenuStateCopyWithImpl<$Res>
   $Res call({
     Object? menuData = null,
     Object? onSubMenu = null,
+    Object? visible = null,
     Object? onSubMenuIndex = freezed,
     Object? selectedSubItemId = freezed,
   }) {
@@ -124,6 +136,10 @@ class __$$_SlideMenuStateCopyWithImpl<$Res>
       onSubMenu: null == onSubMenu
           ? _value.onSubMenu
           : onSubMenu // ignore: cast_nullable_to_non_nullable
+              as bool,
+      visible: null == visible
+          ? _value.visible
+          : visible // ignore: cast_nullable_to_non_nullable
               as bool,
       onSubMenuIndex: freezed == onSubMenuIndex
           ? _value.onSubMenuIndex
@@ -143,15 +159,16 @@ class _$_SlideMenuState extends _SlideMenuState {
   _$_SlideMenuState(
       {final List<SlideMenuData> menuData = const [],
       this.onSubMenu = false,
+      this.visible = true,
       this.onSubMenuIndex,
       this.selectedSubItemId})
       : _menuData = menuData,
         super._();
 
-  /// Current menu data
+  /// 현재 메뉴데이터
   final List<SlideMenuData> _menuData;
 
-  /// Current menu data
+  /// 현재 메뉴데이터
   @override
   @JsonKey()
   List<SlideMenuData> get menuData {
@@ -160,22 +177,28 @@ class _$_SlideMenuState extends _SlideMenuState {
     return EqualUnmodifiableListView(_menuData);
   }
 
-  /// If there is a submenu
+  /// 서브메뉴가 있는 경우
+  /// 네비게이션 네일 메뉴 클릭 > 서브메뉴가 있는 경우 true
   @override
   @JsonKey()
   final bool onSubMenu;
 
-  /// Rail tap > submenu Index
+  /// 서브메뉴 open 또는 close, true: 안 보임
+  @override
+  @JsonKey()
+  final bool visible;
+
+  /// 네비게이션 네일 메뉴 클릭 > 네일 인덱스
   @override
   final int? onSubMenuIndex;
 
-  /// ID when an item in the submenu is selected
+  /// 서브메뉴의 아이템을 선택했을 때 id
   @override
   final String? selectedSubItemId;
 
   @override
   String toString() {
-    return 'SlideMenuState(menuData: $menuData, onSubMenu: $onSubMenu, onSubMenuIndex: $onSubMenuIndex, selectedSubItemId: $selectedSubItemId)';
+    return 'SlideMenuState(menuData: $menuData, onSubMenu: $onSubMenu, visible: $visible, onSubMenuIndex: $onSubMenuIndex, selectedSubItemId: $selectedSubItemId)';
   }
 
   @override
@@ -186,6 +209,7 @@ class _$_SlideMenuState extends _SlideMenuState {
             const DeepCollectionEquality().equals(other._menuData, _menuData) &&
             (identical(other.onSubMenu, onSubMenu) ||
                 other.onSubMenu == onSubMenu) &&
+            (identical(other.visible, visible) || other.visible == visible) &&
             (identical(other.onSubMenuIndex, onSubMenuIndex) ||
                 other.onSubMenuIndex == onSubMenuIndex) &&
             (identical(other.selectedSubItemId, selectedSubItemId) ||
@@ -197,6 +221,7 @@ class _$_SlideMenuState extends _SlideMenuState {
       runtimeType,
       const DeepCollectionEquality().hash(_menuData),
       onSubMenu,
+      visible,
       onSubMenuIndex,
       selectedSubItemId);
 
@@ -211,25 +236,31 @@ abstract class _SlideMenuState extends SlideMenuState {
   factory _SlideMenuState(
       {final List<SlideMenuData> menuData,
       final bool onSubMenu,
+      final bool visible,
       final int? onSubMenuIndex,
       final String? selectedSubItemId}) = _$_SlideMenuState;
   _SlideMenuState._() : super._();
 
   @override
 
-  /// Current menu data
+  /// 현재 메뉴데이터
   List<SlideMenuData> get menuData;
   @override
 
-  /// If there is a submenu
+  /// 서브메뉴가 있는 경우
+  /// 네비게이션 네일 메뉴 클릭 > 서브메뉴가 있는 경우 true
   bool get onSubMenu;
   @override
 
-  /// Rail tap > submenu Index
+  /// 서브메뉴 open 또는 close, true: 안 보임
+  bool get visible;
+  @override
+
+  /// 네비게이션 네일 메뉴 클릭 > 네일 인덱스
   int? get onSubMenuIndex;
   @override
 
-  /// ID when an item in the submenu is selected
+  /// 서브메뉴의 아이템을 선택했을 때 id
   String? get selectedSubItemId;
   @override
   @JsonKey(ignore: true)

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../router/app_router.dart';
+import '../../router/app_router.dart';
 
 
 
@@ -18,7 +18,7 @@ class MyHomePage extends StatelessWidget {
           children: [
             Text('MyHome page'),
             SizedBox(height: 40.0,),
-            TextButton(onPressed: ()=>context.go(AppRoutes.settings), child: Text('Go MenuPage'))
+            TextButton(onPressed: ()=>context.goNamed(AppRoutes.settings), child: Text('Go MenuPage'))
           ],
         ),
       )),

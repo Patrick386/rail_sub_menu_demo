@@ -1,9 +1,12 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+
 import 'package:rail_sub_menu/extensions.dart';
-import '../../logging.dart';
+
 import '../expansionTileX/expansion_tile_x.dart';
+import '../on_hover_button.dart';
 import 'model/slide_menu_data.dart';
+
 
 /// Used with navigation rails.
 /// Can be used without navigation rails.
@@ -11,16 +14,17 @@ class RailSubMenu extends StatefulWidget {
   const RailSubMenu(
       {Key? key,
         required this.constraints,
-        required this.onHover,
         required this.menuData,
+        this.background = Colors.white,
         this.selectedId,
-        this.onSelected})
+        this.onSelected, this.onClosed})
       : super(key: key);
   final BoxConstraints constraints;
-  final bool onHover;
   final String? selectedId;
   final ValueChanged<ItemMenuData>? onSelected;
   final List<SlideMenuData> menuData;
+  final Color background;
+  final VoidCallback? onClosed;
 
   @override
   State<RailSubMenu> createState() => _RailSubMenuState();
@@ -38,75 +42,86 @@ class _RailSubMenuState extends State<RailSubMenu> {
 
   @override
   Widget build(BuildContext context) {
-   // logger.info('selectedId:$selectedId');
-   // logger.info('menuData>>:${widget.menuData}');
+    // logger.info('selectedId:$selectedId');
+    // logger.info('menuData>>:${widget.menuData}');
     selectedId = widget.selectedId;
+    return OnHoverButton(builder: (bool isHovered) {
+      return Container(
+        width: 210,
+        height: widget.constraints.maxHeight,
+        margin: const EdgeInsets.only(right: 4.0),
 
+        /// Submenu frame
+        decoration: BoxDecoration(
+          color: widget.background,//const Color(0xFFF4F6FC),
+          borderRadius: const BorderRadius.only(
+              topRight: Radius.circular(20.0),
+              bottomRight: Radius.circular(20.0)),
+          boxShadow: [
+            if(isHovered)
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                //color: Colors.transparent,
+                spreadRadius: 0,
+                blurRadius: 2,
+                offset: const Offset(2, 0),
+                //first parameter of offset is left-right
+                //second parameter is top to down
+              ),
+          ],
+        ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+            child: Column(
+              children: [
+                /// 서브메뉴 닫기
+                ListTile(trailing:    IconButton(onPressed: widget.onClosed, icon: const Icon(Icons.keyboard_arrow_left),)),
+                SizedBox(height: 20.0),
+                ...widget.menuData.mapIndexed((int index, SlideMenuData e) {
 
+                  if(e.itemMenu.isNotEmpty){
+                    return _ExpansionMenu(
+                      key: ValueKey(e.header!.id),
+                      /// Expand if the first menu configuration is Expansion
+                      initiallyExpanded: index == 0,
+                      title: e.header!.title,
+                      children: [
+                        ...e.itemMenu
+                            .map((ItemMenuData e) => _MenuItem(
+                          selected: e.id == selectedId,
+                          title: e.title,
+                          onTap: () {
+                            setState(() {});
+                            widget.onSelected!(e);
 
-    return Container(
-      width: 210,
-      height: widget.constraints.maxHeight,
-      padding: EdgeInsets.symmetric(vertical: 40.0, horizontal: 20.0),
-      /// Submenu frame
-      decoration: BoxDecoration(
-        color: const Color(0xFFF4F6FC),
-        borderRadius: const BorderRadius.only(
-            topRight: Radius.circular(20.0),
-            bottomRight: Radius.circular(20.0)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 0,
-            blurRadius: 2,
-            offset: const Offset(2, 0),
-            //first parameter of offset is left-right
-            //second parameter is top to down
+                          },
+                        ))
+                            .toList(),
+                      ],
+                    );
+                  }else{
+                    if(e.header==null) return const SizedBox();
+                    return _MenuItem(
+                      selected: e.header!.id == selectedId,
+                      title: e.header!.title,
+                      onTap: () {
+                        setState(() {});
+                        widget.onSelected!(e.header!);
+                      },
+                    );
+                  }
+
+                }
+                ).toList(),
+
+              ],
+            ),
           ),
-        ],
-      ),
-      child: Column(
-        children: [
-          ...widget.menuData.mapIndexed((int index, SlideMenuData e) {
+        ),
+      );
+    },);
 
-            if(e.itemMenu.isNotEmpty){
-              return _ExpansionMenu(
-                key: ValueKey(e.header!.id),
-                /// Expand if the first menu configuration is Expansion
-                initiallyExpanded: index == 0,
-                title: e.header!.title,
-                children: [
-                  ...e.itemMenu
-                      .map((ItemMenuData e) => _MenuItem(
-                    selected: e.id == selectedId,
-                    title: e.title,
-                    onTap: () {
-                      setState(() {});
-                      widget.onSelected!(e);
-
-                    },
-                  ))
-                      .toList(),
-                ],
-              );
-            }else{
-              if(e.header==null) return const SizedBox();
-              return _MenuItem(
-                selected: e.header!.id == selectedId,
-                title: e.header!.title,
-                onTap: () {
-                  setState(() {});
-                  widget.onSelected!(e.header!);
-                },
-              );
-            }
-
-          }
-          ).toList(),
-
-        ],
-      ),
-    );
   }
 }
 
@@ -123,7 +138,7 @@ class _ExpansionMenu extends StatefulWidget {
 
 class _ExpansionMenuState extends State<_ExpansionMenu> {
   MaterialColor activeColor = Colors.blue;
-  Color defaultColor = Color(0xFF454746); //Colors.white54;
+  Color defaultColor = const Color(0xFF454746); //Colors.white54;
 
   Color activeColor2 = const Color(0xFFC6D0FE); // blu (Selected item hover color)
   Color hoverColor = const Color(0xFFE6E8ED); // Gray
@@ -160,7 +175,8 @@ class _ExpansionMenuState extends State<_ExpansionMenu> {
           child: ExpansionTileX(
             initiallyExpanded: widget.initiallyExpanded,
             //headerRadius: BorderRadius.all(Radius.circular(10.0)),
-            headerColor:  tileHovered ? hoverColor :  Colors.transparent,
+            //headerColor:  tileHovered ? hoverColor :  Colors.transparent,
+            headerColor:  Colors.transparent,
             title: Text(widget.title,
                 style: context.titleSmall?.copyWith(
                     fontWeight:

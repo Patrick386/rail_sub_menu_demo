@@ -17,9 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$SlideMenuData {
   ItemMenuData? get header => throw _privateConstructorUsedError;
-
-  ///Expansion if true, itemMenu if false is ignored.
-  bool get expansion => throw _privateConstructorUsedError;
   List<ItemMenuData> get itemMenu => throw _privateConstructorUsedError;
   bool get selected => throw _privateConstructorUsedError;
 
@@ -34,11 +31,7 @@ abstract class $SlideMenuDataCopyWith<$Res> {
           SlideMenuData value, $Res Function(SlideMenuData) then) =
       _$SlideMenuDataCopyWithImpl<$Res, SlideMenuData>;
   @useResult
-  $Res call(
-      {ItemMenuData? header,
-      bool expansion,
-      List<ItemMenuData> itemMenu,
-      bool selected});
+  $Res call({ItemMenuData? header, List<ItemMenuData> itemMenu, bool selected});
 
   $ItemMenuDataCopyWith<$Res>? get header;
 }
@@ -57,7 +50,6 @@ class _$SlideMenuDataCopyWithImpl<$Res, $Val extends SlideMenuData>
   @override
   $Res call({
     Object? header = freezed,
-    Object? expansion = null,
     Object? itemMenu = null,
     Object? selected = null,
   }) {
@@ -66,10 +58,6 @@ class _$SlideMenuDataCopyWithImpl<$Res, $Val extends SlideMenuData>
           ? _value.header
           : header // ignore: cast_nullable_to_non_nullable
               as ItemMenuData?,
-      expansion: null == expansion
-          ? _value.expansion
-          : expansion // ignore: cast_nullable_to_non_nullable
-              as bool,
       itemMenu: null == itemMenu
           ? _value.itemMenu
           : itemMenu // ignore: cast_nullable_to_non_nullable
@@ -102,11 +90,7 @@ abstract class _$$_SlideMenuDataCopyWith<$Res>
       __$$_SlideMenuDataCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {ItemMenuData? header,
-      bool expansion,
-      List<ItemMenuData> itemMenu,
-      bool selected});
+  $Res call({ItemMenuData? header, List<ItemMenuData> itemMenu, bool selected});
 
   @override
   $ItemMenuDataCopyWith<$Res>? get header;
@@ -124,7 +108,6 @@ class __$$_SlideMenuDataCopyWithImpl<$Res>
   @override
   $Res call({
     Object? header = freezed,
-    Object? expansion = null,
     Object? itemMenu = null,
     Object? selected = null,
   }) {
@@ -133,10 +116,6 @@ class __$$_SlideMenuDataCopyWithImpl<$Res>
           ? _value.header
           : header // ignore: cast_nullable_to_non_nullable
               as ItemMenuData?,
-      expansion: null == expansion
-          ? _value.expansion
-          : expansion // ignore: cast_nullable_to_non_nullable
-              as bool,
       itemMenu: null == itemMenu
           ? _value._itemMenu
           : itemMenu // ignore: cast_nullable_to_non_nullable
@@ -154,7 +133,6 @@ class __$$_SlideMenuDataCopyWithImpl<$Res>
 class _$_SlideMenuData extends _SlideMenuData {
   _$_SlideMenuData(
       {this.header,
-      this.expansion = false,
       final List<ItemMenuData> itemMenu = const [],
       this.selected = false})
       : _itemMenu = itemMenu,
@@ -162,11 +140,6 @@ class _$_SlideMenuData extends _SlideMenuData {
 
   @override
   final ItemMenuData? header;
-
-  ///Expansion if true, itemMenu if false is ignored.
-  @override
-  @JsonKey()
-  final bool expansion;
   final List<ItemMenuData> _itemMenu;
   @override
   @JsonKey()
@@ -182,7 +155,7 @@ class _$_SlideMenuData extends _SlideMenuData {
 
   @override
   String toString() {
-    return 'SlideMenuData(header: $header, expansion: $expansion, itemMenu: $itemMenu, selected: $selected)';
+    return 'SlideMenuData(header: $header, itemMenu: $itemMenu, selected: $selected)';
   }
 
   @override
@@ -191,15 +164,13 @@ class _$_SlideMenuData extends _SlideMenuData {
         (other.runtimeType == runtimeType &&
             other is _$_SlideMenuData &&
             (identical(other.header, header) || other.header == header) &&
-            (identical(other.expansion, expansion) ||
-                other.expansion == expansion) &&
             const DeepCollectionEquality().equals(other._itemMenu, _itemMenu) &&
             (identical(other.selected, selected) ||
                 other.selected == selected));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, header, expansion,
+  int get hashCode => Object.hash(runtimeType, header,
       const DeepCollectionEquality().hash(_itemMenu), selected);
 
   @JsonKey(ignore: true)
@@ -212,17 +183,12 @@ class _$_SlideMenuData extends _SlideMenuData {
 abstract class _SlideMenuData extends SlideMenuData {
   factory _SlideMenuData(
       {final ItemMenuData? header,
-      final bool expansion,
       final List<ItemMenuData> itemMenu,
       final bool selected}) = _$_SlideMenuData;
   _SlideMenuData._() : super._();
 
   @override
   ItemMenuData? get header;
-  @override
-
-  ///Expansion if true, itemMenu if false is ignored.
-  bool get expansion;
   @override
   List<ItemMenuData> get itemMenu;
   @override
@@ -235,9 +201,9 @@ abstract class _SlideMenuData extends SlideMenuData {
 
 /// @nodoc
 mixin _$ItemMenuData {
-  String get id => throw _privateConstructorUsedError; // 6-digit short ID
+  String get id => throw _privateConstructorUsedError; // 6자리 짧은 ID
   String get title => throw _privateConstructorUsedError; //
-  String? get routerPath => throw _privateConstructorUsedError; // Router path
+  String? get routerName => throw _privateConstructorUsedError; // 라우터 이름
   bool get selected => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -251,7 +217,7 @@ abstract class $ItemMenuDataCopyWith<$Res> {
           ItemMenuData value, $Res Function(ItemMenuData) then) =
       _$ItemMenuDataCopyWithImpl<$Res, ItemMenuData>;
   @useResult
-  $Res call({String id, String title, String? routerPath, bool selected});
+  $Res call({String id, String title, String? routerName, bool selected});
 }
 
 /// @nodoc
@@ -269,7 +235,7 @@ class _$ItemMenuDataCopyWithImpl<$Res, $Val extends ItemMenuData>
   $Res call({
     Object? id = null,
     Object? title = null,
-    Object? routerPath = freezed,
+    Object? routerName = freezed,
     Object? selected = null,
   }) {
     return _then(_value.copyWith(
@@ -281,9 +247,9 @@ class _$ItemMenuDataCopyWithImpl<$Res, $Val extends ItemMenuData>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      routerPath: freezed == routerPath
-          ? _value.routerPath
-          : routerPath // ignore: cast_nullable_to_non_nullable
+      routerName: freezed == routerName
+          ? _value.routerName
+          : routerName // ignore: cast_nullable_to_non_nullable
               as String?,
       selected: null == selected
           ? _value.selected
@@ -301,7 +267,7 @@ abstract class _$$_ItemMenuDataCopyWith<$Res>
       __$$_ItemMenuDataCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String title, String? routerPath, bool selected});
+  $Res call({String id, String title, String? routerName, bool selected});
 }
 
 /// @nodoc
@@ -317,7 +283,7 @@ class __$$_ItemMenuDataCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? title = null,
-    Object? routerPath = freezed,
+    Object? routerName = freezed,
     Object? selected = null,
   }) {
     return _then(_$_ItemMenuData(
@@ -329,9 +295,9 @@ class __$$_ItemMenuDataCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      routerPath: freezed == routerPath
-          ? _value.routerPath
-          : routerPath // ignore: cast_nullable_to_non_nullable
+      routerName: freezed == routerName
+          ? _value.routerName
+          : routerName // ignore: cast_nullable_to_non_nullable
               as String?,
       selected: null == selected
           ? _value.selected
@@ -345,27 +311,27 @@ class __$$_ItemMenuDataCopyWithImpl<$Res>
 
 class _$_ItemMenuData extends _ItemMenuData {
   _$_ItemMenuData(
-      {this.id = '', this.title = '', this.routerPath, this.selected = false})
+      {this.id = '', this.title = '', this.routerName, this.selected = false})
       : super._();
 
   @override
   @JsonKey()
   final String id;
-// 6-digit short ID
+// 6자리 짧은 ID
   @override
   @JsonKey()
   final String title;
 //
   @override
-  final String? routerPath;
-// Router path
+  final String? routerName;
+// 라우터 이름
   @override
   @JsonKey()
   final bool selected;
 
   @override
   String toString() {
-    return 'ItemMenuData(id: $id, title: $title, routerPath: $routerPath, selected: $selected)';
+    return 'ItemMenuData(id: $id, title: $title, routerName: $routerName, selected: $selected)';
   }
 
   @override
@@ -375,14 +341,14 @@ class _$_ItemMenuData extends _ItemMenuData {
             other is _$_ItemMenuData &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
-            (identical(other.routerPath, routerPath) ||
-                other.routerPath == routerPath) &&
+            (identical(other.routerName, routerName) ||
+                other.routerName == routerName) &&
             (identical(other.selected, selected) ||
                 other.selected == selected));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, routerPath, selected);
+  int get hashCode => Object.hash(runtimeType, id, title, routerName, selected);
 
   @JsonKey(ignore: true)
   @override
@@ -395,17 +361,17 @@ abstract class _ItemMenuData extends ItemMenuData {
   factory _ItemMenuData(
       {final String id,
       final String title,
-      final String? routerPath,
+      final String? routerName,
       final bool selected}) = _$_ItemMenuData;
   _ItemMenuData._() : super._();
 
   @override
   String get id;
-  @override // 6-digit short ID
+  @override // 6자리 짧은 ID
   String get title;
   @override //
-  String? get routerPath;
-  @override // Router path
+  String? get routerName;
+  @override // 라우터 이름
   bool get selected;
   @override
   @JsonKey(ignore: true)
